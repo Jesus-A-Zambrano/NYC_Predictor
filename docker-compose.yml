@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      REDIS_URL: redis://redis:6379
+      ML_SERVICE_URL: http://ml-model:8000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules # Exclude node_modules from the bind mount
+    depends_on:
+      - redis
+      - ml-model
+    env_file:
+      - .env.development
+
+  ml-model:
+    build:
+      context: ./ml-model
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      ML_MODEL_PATH: /app/model/sales_predictor.pkl # Set model path for Docker environment
+    volumes:
+      - ./ml-model:/app
+      # - /app/model # No longer need to exclude model as we want it copied by Dockerfile
+    env_file:
+      - .env.development
+
+  redis:
+    image: redis:7.0-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data # Persist Redis data
+
+volumes:
+  redis_data:

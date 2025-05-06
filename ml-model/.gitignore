@@ -1,0 +1,19 @@
+# Ignore Python virtual environment
+venv/
+.venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore data files that are generated or large
+#data/*.csv # Example: ignore generated CSVs
+model/*.pkl
+
+# Ignore trained models and metadata (if you manage them separately or regenerate)
+# model/*.pkl
+# model/*.json
+# Uncomment the above lines if you don't want to track models in git
+
+# Ignore notebooks checkpoints
+.ipynb_checkpoints

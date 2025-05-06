@@ -1,0 +1,11 @@
+# Ignore Node.js modules
+node_modules/
+
+# Ignore compiled TypeScript files
+dist/
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore editor config if any
+.editorconfig

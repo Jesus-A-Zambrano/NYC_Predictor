@@ -1,0 +1,22 @@
+{
+    "version": "2.0",
+    "trained_date": "2025-05-06T21:21:07.389405",
+    "model_name": "RandomForestRegressor_NYC_Sales",
+    "features": [
+        "BOROUGH",
+        "BUILDING_CLASS_AT_TIME_OF_SALE",
+        "GROSS_SQUARE_FEET",
+        "YEAR_BUILT"
+    ],
+    "target": "SALE_PRICE",
+    "preprocessing": {
+        "categorical": [
+            "BUILDING_CLASS_AT_TIME_OF_SALE"
+        ],
+        "numerical": [
+            "BOROUGH",
+            "GROSS_SQUARE_FEET",
+            "YEAR_BUILT"
+        ]
+    }
+}
