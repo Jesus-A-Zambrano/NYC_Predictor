@@ -1,0 +1,30 @@
+# Ignore Python virtual environment
+venv
+.venv
+
+# Ignore Python cache files
+__pycache__
+*.pyc
+
+# Ignore data directory (if data is mounted as a volume or not needed in the image)
+data
+
+# Ignore notebooks directory
+notebooks
+
+# Ignore .env files (if using env_file in docker-compose)
+.env
+.env.*
+
+# Ignore editor/IDE specific files
+.vscode
+.idea
+
+# Ignore Git directory
+.git
+
+# Ignore Dockerfile itself
+Dockerfile
+
+# Ignore docker-compose.yml
+docker-compose.yml

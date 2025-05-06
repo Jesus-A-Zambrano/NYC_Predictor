@@ -1,0 +1,25 @@
+# Ignore Node.js modules directory
+node_modules
+
+# Ignore build output directory
+dist
+
+# Ignore .env files as we are using env_file in docker-compose
+.env
+.env.*
+
+# Ignore editor/IDE specific files
+.vscode
+.idea
+
+# Ignore Git directory
+.git
+
+# Ignore test related files if not needed in the final image
+tests
+
+# Ignore Dockerfile itself (common practice)
+Dockerfile
+
+# Ignore docker-compose.yml (if copied to the build context, though unlikely with proper context setting)
+docker-compose.yml
