@@ -17,12 +17,24 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               features:
- *                 type: array
- *                 items:
- *                   type: number
- *                 description: Array of features for prediction
- *                 example: [1.5, 2.3]
+ *               borough:
+ *                 type: number
+ *                 format: integer
+ *                 description: The borough number (1-5)
+ *                 example: 3
+ *               buildingClassAtTimeOfSale:
+ *                 type: string
+ *                 description: The building class at the time of sale
+ *                 example: "A1"
+ *               grossSquareFeet:
+ *                 type: number
+ *                 description: The gross square footage of the property
+ *                 example: 1500
+ *               yearBuilt:
+ *                 type: number
+ *                 format: integer
+ *                 description: The year the property was built
+ *                 example: 1950
  *     responses:
  *       200:
  *         description: Prediction result

@@ -18,9 +18,8 @@ export const predictionController = {
       // Try to get from cache
       const cachedPrediction = await getCache(cacheKey);
       if (cachedPrediction) {
-        logger.info(`Cache hit for data: ${JSON.stringify(inputData)}`);
-        // Ensure the cached value is parsed correctly back to a number
-        return res.json({ prediction: parseFloat(cachedPrediction) });
+        logger.info(`Cache hit for data: ${JSON.stringify(inputData)}. Returning cached prediction.`);
+        return res.json({ prediction: parseFloat(cachedPrediction) }); // Assuming cache stores as string, parse to number
       }
 
       logger.info(`Cache miss for data: ${JSON.stringify(inputData)}. Calling ML service.`);
@@ -31,8 +30,7 @@ export const predictionController = {
       const prediction = response.data.prediction;
 
       // Cache the result (e.g., for 1 hour)
-      // Convert prediction to string before caching as Redis stores strings
-      await setCache(cacheKey, prediction.toString(), 3600);
+ await setCache(cacheKey, prediction, 3600); // Cache the number directly
 
       res.json({ prediction });
     } catch (error) {
