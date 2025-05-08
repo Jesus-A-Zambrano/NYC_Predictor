@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { predictionController } from '../controllers/prediction.controller';
 import { validateRequest } from '../middleware/validateRequest.middleware';
 import { PredictionInputSchema } from '../schemas/prediction.schemas';
+import { z } from 'zod';
 
 const router = Router();
 
@@ -51,6 +52,6 @@ const router = Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/', validateRequest(PredictionInputSchema), predictionController.predict);
+router.post('/', validateRequest(z.object({ body: PredictionInputSchema })), predictionController.predict);
 
 export default router;

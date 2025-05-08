@@ -53,9 +53,9 @@ function Index() {
     console.log("Valores del formulario:", values)
 
     try {
-      // TODO: Reemplazar con la URL correcta del backend
-      const response = await fetch("http://localhost:3000/predict", {
-        // Asumimos /predict como endpoint temporal
+      // Use the relative path which will be proxied by Nginx in production
+      // and by Vite dev server in development
+      const response = await fetch("/api/predict", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function Index() {
       }
 
       const data = await response.json()
-      setEstimatedPrice(data.estimatedPrice) // Asumimos que el backend devuelve { estimatedPrice: ... }
+      setEstimatedPrice(data.prediction) // Correctly access the 'prediction' field
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)

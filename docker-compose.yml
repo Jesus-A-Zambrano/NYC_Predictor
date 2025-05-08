@@ -39,5 +39,14 @@ services:
     volumes:
       - redis_data:/data # Persist Redis data
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend # The frontend likely needs the backend API
+
 volumes:
   redis_data:
