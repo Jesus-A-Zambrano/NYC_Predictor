@@ -32,7 +32,8 @@ export const Route = createFileRoute("/")({
 })
 
 function Index() {
-  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null)
+  // Change state type to string | null as backend will send formatted string
+  const [estimatedPrice, setEstimatedPrice] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -69,7 +70,8 @@ function Index() {
       }
 
       const data = await response.json()
-      setEstimatedPrice(data.prediction) // Correctly access the 'prediction' field
+      // Set the state directly with the received string prediction
+      setEstimatedPrice(data.prediction)
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)
@@ -85,7 +87,7 @@ function Index() {
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-center">
-        Calculadora de Precios de Propiedades en NYC
+      Predicción de Precios de Inmuebles en Nueva York
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -180,7 +182,8 @@ function Index() {
       {estimatedPrice !== null && (
         <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
           <h2 className="text-xl font-semibold">Precio Estimado:</h2>
-          <p className="text-2xl">${estimatedPrice.toLocaleString()}</p>
+          {/* Parse the string to a number and format for display */}
+          <p className="text-2xl">${parseFloat(estimatedPrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
         </div>
       )}
     </div>

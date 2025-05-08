@@ -45,8 +45,9 @@ const router = Router();
  *               type: object
  *               properties:
  *                 prediction:
- *                   type: number
- *                   description: The predicted value
+ *                   type: string
+ *                   description: The predicted value, rounded to 2 decimal places (string)
+ *                   example: "123456.78"
  *       400:
  *         description: Invalid input
  *       500:
