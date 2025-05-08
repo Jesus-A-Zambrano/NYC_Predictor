@@ -22,8 +22,8 @@ export const predictionController = {
       const cachedPrediction = await getCache(cacheKey);
       if (cachedPrediction) {
         logger.info(`Cache hit for data: ${JSON.stringify(inputData)}. Returning cached prediction.`);
-        // Cache stores as number, no need to parse string
-        return res.json({ prediction: cachedPrediction });
+        // Cache stores as string, parse to number before returning
+        return res.json({ prediction: parseFloat(cachedPrediction) });
       }
 
       logger.info(`Cache miss for data: ${JSON.stringify(inputData)}. Calling ML service.`);
@@ -41,10 +41,12 @@ export const predictionController = {
       // Call the ML microservice with the transformed input data
       const response = await axios.post(`${ML_SERVICE_URL}/predict`, mlInputData);
 
-      const prediction = response.data.prediction;
+      let prediction = response.data.prediction;
 
-      // Cache the result (e.g., for 1 hour)
-      // Cache the number directly, using the data nested within body for the key
+      // Round the prediction to 2 decimal places
+      prediction = parseFloat(prediction.toFixed(2));
+
+      // Cache the rounded prediction
       await setCache(cacheKey, prediction, 3600);
 
       res.json({ prediction });

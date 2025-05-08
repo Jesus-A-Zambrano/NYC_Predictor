@@ -85,7 +85,7 @@ function Index() {
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-center">
-        Calculadora de Precios de Propiedades en NYC
+      Predicción de Precios de Inmuebles en Nueva York
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
