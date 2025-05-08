@@ -8,8 +8,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build && ls -l dist
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]

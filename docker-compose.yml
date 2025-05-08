@@ -6,12 +6,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       REDIS_URL: redis://redis:6379
       ML_SERVICE_URL: http://ml-model:8000
-    volumes:
-      - ./backend:/app
-      - /app/node_modules # Exclude node_modules from the bind mount
     depends_on:
       - redis
       - ml-model
