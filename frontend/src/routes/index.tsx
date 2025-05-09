@@ -40,7 +40,7 @@ const formSchema = z.object({
     .number()
     .int()
     .min(1800, { message: "El año debe ser válido, mayor o igual de 1800." })
-    .max(2016, { message: "El año debe ser valido y menor o igual de 2017" }),
+    .max(2016, { message: "El año debe ser valido y menor o igual de 2016" }),
 })
 
 export const Route = createFileRoute("/")({
