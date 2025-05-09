@@ -120,6 +120,12 @@ function Index() {
     }
   }
 
+  const handleClearBuildingClassInput = () => {
+    setBuildingClassInput('');
+    form.setValue('buildingClassAtTimeOfSale', ''); // Clear the form field value
+    setShowBuildingClassSuggestions(false);
+  };
+
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-center">
@@ -158,20 +164,32 @@ function Index() {
             render={({ field }) => (
               <FormItem className="flex flex-col relative">
                 <FormLabel>Building Class at Time of Sale (Clase de Edificio)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Empieza a escribir..."
-                    value={buildingClassInput}
-                    onChange={(e) => {
-                      setBuildingClassInput(e.target.value);
-                      // Clear the form field value when the input changes manually
-                      field.onChange('');
-                      setShowBuildingClassSuggestions(true);
-                    }}
-                    onFocus={() => setShowBuildingClassSuggestions(true)}
-                    onBlur={() => setTimeout(() => setShowBuildingClassSuggestions(false), 100)}
-                  />
-                </FormControl>
+                <div className="relative">
+                  <FormControl>
+                    <Input
+                      placeholder="Empieza a escribir..."
+                      value={buildingClassInput}
+                      onChange={(e) => {
+                        setBuildingClassInput(e.target.value);
+                        // Clear the form field value when the input changes manually
+                        field.onChange('');
+                        setShowBuildingClassSuggestions(true);
+                      }}
+                      onFocus={() => setShowBuildingClassSuggestions(true)}
+                      onBlur={() => setTimeout(() => setShowBuildingClassSuggestions(false), 100)}
+                      className="pr-8" // Add right padding to make space for the clear button
+                    />
+                  </FormControl>
+                  {buildingClassInput && (
+                    <button
+                      type="button"
+                      onClick={handleClearBuildingClassInput}
+                      className="absolute inset-y-0 right-0 pr-2 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
                 <FormDescription>
                   Selecciona la clasificación del edificio en el momento de la venta.
                 </FormDescription>
