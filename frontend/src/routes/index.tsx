@@ -27,20 +27,26 @@ const boroughs = [
 
 // Define el esquema de validación con Zod
 const formSchema = z.object({
-  borough: z.coerce.number().int().positive({ message: "Debe ser un número positivo." }),
-  buildingClassAtTimeOfSale: z.string().min(1, { message: "Este campo es requerido." }),
+  borough: z.coerce.number({ message: "Por favor, selecciona un municipio." }).int().positive(),
+  buildingClassAtTimeOfSale: z.string().min(1, { message: "Por favor, selecciona una clase de edificio." }),
   grossSquareFeet: z.coerce
-  .number()
-  .min(504, { message: "Debe ser mayor o igual a 504." })
-  .max(3996, { message: "Debe ser menor o igual a 3996." })
+  .number({
+    required_error: "Por favor, ingresa los pies cuadrados brutos.",
+    invalid_type_error: "El valor debe ser un número válido para los pies cuadrados brutos.",
+  })
+  .min(500, { message: "Los pies cuadrados brutos deben ser mayor o igual a 500." })
+  .max(3996, { message: "Los pies cuadrados brutos deben ser menor o igual a 3996." })
   .refine((val) => Number.isFinite(val) && Number(val.toFixed(2)) === val, {
-    message: "Debe tener como máximo 2 decimales.",
+    message: "Los pies cuadrados brutos deben tener como máximo 2 decimales.",
   }),
   yearBuilt: z.coerce
-    .number()
+    .number({
+      required_error: "Por favor, ingresa el año de construcción.",
+      invalid_type_error: "El valor debe ser un número válido para el año de construcción.",
+    })
     .int()
-    .min(1800, { message: "El año debe ser válido, mayor o igual de 1800." })
-    .max(2016, { message: "El año debe ser valido y menor o igual de 2016" }),
+    .min(1800, { message: "El año de construcción debe ser válido, mayor o igual de 1800." })
+    .max(2016, { message: "El año de construcción debe ser válido y menor o igual de 2016" }),
 })
 
 export const Route = createFileRoute("/")({
