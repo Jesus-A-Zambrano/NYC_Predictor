@@ -1,22 +1,36 @@
 {
-    "version": "2.0",
-    "trained_date": "2025-05-06T21:21:07.389405",
-    "model_name": "RandomForestRegressor_NYC_Sales",
+    "version": "1.0",
+    "trained_date": "2025-05-09T08:11:59.248306",
+    "model_name": "RandomForestRegressor_NYC_Sales_Backend",
     "features": [
         "BOROUGH",
         "BUILDING_CLASS_AT_TIME_OF_SALE",
         "GROSS_SQUARE_FEET",
-        "YEAR_BUILT"
+        "YEAR_BUILT",
+        "season",
+        "TAX_CLASS_AT_TIME_OF_SALE",
+        "ZIP_CODE",
+        "RESIDENTIAL_UNITS",
+        "SALE_MONTH"
     ],
     "target": "SALE_PRICE",
+    "transformations": {
+        "SALE_PRICE": "log1p",
+        "GROSS_SQUARE_FEET": "log1p"
+    },
     "preprocessing": {
         "categorical": [
-            "BUILDING_CLASS_AT_TIME_OF_SALE"
+            "BUILDING_CLASS_AT_TIME_OF_SALE",
+            "season",
+            "TAX_CLASS_AT_TIME_OF_SALE",
+            "ZIP_CODE",
+            "YEAR_BUILT",
+            "SALE_MONTH",
+            "RESIDENTIAL_UNITS"
         ],
         "numerical": [
             "BOROUGH",
-            "GROSS_SQUARE_FEET",
-            "YEAR_BUILT"
+            "GROSS_SQUARE_FEET"
         ]
     }
 }

@@ -46,7 +46,12 @@ def predict(request: PredictionRequest):
             'BOROUGH': [request.BOROUGH],
             'BUILDING_CLASS_AT_TIME_OF_SALE': [request.BUILDING_CLASS_AT_TIME_OF_SALE],
             'GROSS_SQUARE_FEET': [np.log1p(request.GROSS_SQUARE_FEET)], # Apply log1p transformation
-            'YEAR_BUILT': [request.YEAR_BUILT]
+            'YEAR_BUILT': [request.YEAR_BUILT],
+            'season': '1',
+            'TAX_CLASS_AT_TIME_OF_SALE': '1',
+            'ZIP_CODE': 10001,
+            'RESIDENTIAL_UNITS': 1,
+            'SALE_MONTH': 1,
         })
 
         # Make prediction using the pipeline
