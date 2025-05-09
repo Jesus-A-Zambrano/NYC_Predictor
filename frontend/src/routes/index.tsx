@@ -29,12 +29,18 @@ const boroughs = [
 const formSchema = z.object({
   borough: z.coerce.number().int().positive({ message: "Debe ser un número positivo." }),
   buildingClassAtTimeOfSale: z.string().min(1, { message: "Este campo es requerido." }),
-  grossSquareFeet: z.coerce.number().positive({ message: "Debe ser un número positivo." }),
+  grossSquareFeet: z.coerce
+  .number()
+  .min(504, { message: "Debe ser mayor o igual a 504." })
+  .max(3996, { message: "Debe ser menor o igual a 3996." })
+  .refine((val) => Number.isFinite(val) && Number(val.toFixed(2)) === val, {
+    message: "Debe tener como máximo 2 decimales.",
+  }),
   yearBuilt: z.coerce
     .number()
     .int()
-    .min(1800, { message: "El año debe ser válido y mayor a 1800." })
-    .max(new Date().getFullYear(), { message: "El año no puede ser mayor al actual." }),
+    .min(1800, { message: "El año debe ser válido, mayor o igual de 1800." })
+    .max(2016, { message: "El año debe ser valido y menor o igual de 2017" }),
 })
 
 export const Route = createFileRoute("/")({
