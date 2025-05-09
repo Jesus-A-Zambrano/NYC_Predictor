@@ -1,4 +1,10 @@
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { createFileRoute } from "@tanstack/react-router"
+import { useMemo, useState } from "react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
@@ -8,13 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { createFileRoute } from "@tanstack/react-router"
-import { useState, useMemo } from "react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { Button } from "@/components/ui/button"
 import { buildingCodes } from "@/lib/buildingCodes"
 
 const boroughs = [
@@ -163,7 +163,7 @@ function Index() {
             name="buildingClassAtTimeOfSale"
             render={({ field }) => (
               <FormItem className="flex flex-col relative">
-                <FormLabel>Building Class at Time of Sale (Clase de Edificio)</FormLabel>
+                <FormLabel>Building Class (Clase de Edificio)</FormLabel>
                 <div className="relative">
                   <FormControl>
                     <Input
