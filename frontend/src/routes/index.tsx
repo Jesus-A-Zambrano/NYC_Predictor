@@ -9,11 +9,21 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { buildingCodes } from "@/lib/buildingCodes"
+
+const boroughs = [
+  { value: 1, label: "1 - Manhattan" },
+  { value: 2, label: "2 - The Bronx" },
+  { value: 3, label: "3 - Brooklyn" },
+  { value: 4, label: "4 - Queens" },
+  { value: 5, label: "5 - Staten Island" },
+];
 
 // Define el esquema de validación con Zod
 const formSchema = z.object({
@@ -41,17 +51,37 @@ function Index() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       borough: undefined,
-      buildingClassAtTimeOfSale: "",
+      buildingClassAtTimeOfSale: "", // Default to empty string for combobox input
       grossSquareFeet: undefined,
       yearBuilt: undefined,
     },
   })
+
+  // State for the combobox input value and suggestions visibility
+  const [buildingClassInput, setBuildingClassInput] = useState('')
+  const [showBuildingClassSuggestions, setShowBuildingClassSuggestions] = useState(false)
+
+  // Filter building codes based on input value
+  const filteredBuildingCodes = useMemo(() => {
+    if (!buildingClassInput) return buildingCodes;
+    return buildingCodes.filter(code =>
+      code.code.toLowerCase().includes(buildingClassInput.toLowerCase()) ||
+      code.description.toLowerCase().includes(buildingClassInput.toLowerCase())
+    );
+  }, [buildingClassInput]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
     setError(null)
     setEstimatedPrice(null)
     console.log("Valores del formulario:", values)
+
+    // Ensure a building class is selected (form validation should handle this too)
+    if (!values.buildingClassAtTimeOfSale) {
+      setError("Please select a Building Class.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // Use the relative path which will be proxied by Nginx in production
@@ -87,7 +117,7 @@ function Index() {
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-center">
-      Predicción de Precios de Inmuebles en Nueva York
+        Predicción de Precios de Inmuebles en Nueva York
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -97,17 +127,21 @@ function Index() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Borough (Municipio)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="Ej: 1 (Manhattan)"
-                    {...field}
-                    onChange={e =>
-                      field.onChange(e.target.value === "" ? undefined : Number(e.target.value))
-                    }
-                  />
-                </FormControl>
-                <FormDescription>Ingresa el código numérico del municipio.</FormDescription>
+                <Select onValueChange={(value) => field.onChange(parseInt(value))} value={field.value?.toString()}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona un municipio" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {boroughs.map((borough) => (
+                      <SelectItem key={borough.value} value={borough.value.toString()}>
+                        {borough.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>Selecciona el municipio de la propiedad.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -116,15 +150,44 @@ function Index() {
             control={form.control}
             name="buildingClassAtTimeOfSale"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col relative">
                 <FormLabel>Building Class at Time of Sale (Clase de Edificio)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ej: R4 - TWO FAMILY DWELLING" {...field} />
+                  <Input
+                    placeholder="Empieza a escribir..."
+                    value={buildingClassInput}
+                    onChange={(e) => {
+                      setBuildingClassInput(e.target.value);
+                      // Clear the form field value when the input changes manually
+                      field.onChange('');
+                      setShowBuildingClassSuggestions(true);
+                    }}
+                    onFocus={() => setShowBuildingClassSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowBuildingClassSuggestions(false), 100)}
+                  />
                 </FormControl>
                 <FormDescription>
-                  Clasificación del edificio en el momento de la venta.
+                  Selecciona la clasificación del edificio en el momento de la venta.
                 </FormDescription>
                 <FormMessage />
+
+                {showBuildingClassSuggestions && filteredBuildingCodes.length > 0 && (
+                  <div className="absolute top-full left-0 mt-1 w-full border rounded-md max-h-48 overflow-y-auto z-10 bg-white shadow-md">
+                    {filteredBuildingCodes.map((code) => (
+                      <div
+                        key={code.code}
+                        className="cursor-pointer px-3 py-2 hover:bg-gray-100"
+                        onClick={() => {
+                          setBuildingClassInput(code.description);
+                          field.onChange(code.code); // Update form field with the code
+                          setShowBuildingClassSuggestions(false);
+                        }}
+                      >
+                        {code.description}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </FormItem>
             )}
           />
