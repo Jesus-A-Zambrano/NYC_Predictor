@@ -1,6 +1,18 @@
-# NYC Property Price Predictor
+# NYC Property Price Predictor 🏙️
 
-This project is an Express project developed over 5 days. It consists of a backend service (Node.js/Express) and an ML model service (Python/FastAPI) that predicts NYC property prices. The project uses Docker Compose for easy setup and deployment.
+> 📄 A detailed explanation of this project is available in the following LinkedIn article:  
+> [Read the full article here](https://www.linkedin.com/pulse/predicci%C3%B3n-inteligente-de-precios-inmobiliarios-en-nueva-mart%C3%ADnez-gixpc)
+
+This project aims to **predict property prices in New York City** using real-world housing data and machine learning.  
+It showcases how to integrate a trained ML model with a web backend in a clean, scalable architecture.
+
+### Tech Overview
+
+- A **REST API** built with **Node.js and Express** to handle client requests.
+- A **machine learning microservice** developed with **Python and FastAPI**, which performs the actual price prediction.
+- Both services are **containerized with Docker** and managed through **Docker Compose** for seamless setup and deployment.
+
+The entire project was developed in 5 days as a rapid proof of concept.
 
 
 ## Prerequisites
@@ -131,3 +143,11 @@ To stop the running Docker containers, navigate to the root directory in your te
 docker compose down
 ```
 This command will stop and remove the containers, networks, and volumes created by `docker compose up`.
+
+## 👥 Contributors
+
+- [gSalvadormm](https://github.com/gSalvadormm) – Data Science & Model Training  
+- [danny-mv](https://github.com/danny-mv) – Fullstack Developer (Backend + Frontend integration)  
+- [Valdimion](https://github.com/Valdimion) – Data Science & Analysis  
+- [Jesus-A-Zambrano](https://github.com/Jesus-A-Zambrano) – Data Science & Analysis  
+- [valentinvera](https://github.com/valentinvera) – Frontend Developer
