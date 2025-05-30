@@ -149,5 +149,4 @@ This command will stop and remove the containers, networks, and volumes created 
 - [gSalvadormm](https://github.com/gSalvadormm) – Data Science & Model Training  
 - [danny-mv](https://github.com/danny-mv) – Fullstack Developer (Backend + Frontend integration)  
 - [Valdimion](https://github.com/Valdimion) – Data Science & Analysis  
-- [Jesus-A-Zambrano](https://github.com/Jesus-A-Zambrano) – Data Science & Analysis  
-- [valentinvera](https://github.com/valentinvera) – Frontend Developer
+- [Jesus-A-Zambrano](https://github.com/Jesus-A-Zambrano) – Data Science & Analysis
