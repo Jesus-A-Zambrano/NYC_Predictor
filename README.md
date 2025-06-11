@@ -8,6 +8,7 @@ It showcases how to integrate a trained ML model with a web backend in a clean, 
 
 ### Tech Overview
 
+- A **modern frontend** built with **React and Vite** for a responsive user interface
 - A **REST API** built with **Node.js and Express** to handle client requests.
 - A **machine learning microservice** developed with **Python and FastAPI**, which performs the actual price prediction.
 - Both services are **containerized with Docker** and managed through **Docker Compose** for seamless setup and deployment.
@@ -44,7 +45,7 @@ Follow these steps to get the project up and running using Docker Compose:
     ```
 
 3.  **Build and run the services:**
-    Navigate to the `temp-repo` directory in your terminal and run the following command:
+    Navigate to the `NYC_Predictor` directory in your terminal and run the following command:
 
     ```bash
     docker compose up -d --build
@@ -82,6 +83,14 @@ The ML model service is a Python/FastAPI application that hosts the trained mach
 *   **Prediction Endpoint:** The backend service communicates with this service internally at `/predict` to obtain predictions. Frontend applications typically interact only with the backend service.
 *   **Model:** The trained model file (`sales_predictor.pkl`) is expected to be in the `/app/model/` directory within the container, as configured in the Dockerfile and `docker-compose.yml`.
 
+## Frontend Application
+
+The frontend is a React/Vite application located in the `frontend/` directory.
+
+* **Port:** When served via Docker it listens on port `3001`. The Vite dev server runs on `5173`.
+* **API Proxy:** Calls to `/api` are proxied to the backend at `http://localhost:3000` during development.
+* **Usage:** See [`frontend/README.md`](frontend/README.md) for installation and build instructions.
+
 ## Data Science / ML Development
 
 This section is particularly relevant for data scientists working on the ML model.
@@ -111,7 +120,7 @@ To train the ML model and generate the `sales_predictor.pkl` file, follow these 
 
 5.  After training, rebuild the `ml-model` Docker image to include the newly generated model file:
     ```bash
-    cd .. # Navigate back to the temp-repo directory
+    cd .. # Navigate back to the NYC_Predictor directory
     docker compose up -d --build ml-model
     ```
     Or rebuild all services:
